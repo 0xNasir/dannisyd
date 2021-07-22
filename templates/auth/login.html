@@ -1,0 +1,104 @@
+{% extends 'auth/auth_base.html' %}
+{% block title %}PIs | Login{% endblock %}
+{% block stylesheet %}
+    <style>
+
+        .text-wrap {
+            background: #f75959;
+            background: -moz-linear-gradient(-45deg, #f75959 0%, #f35587 100%);
+            background: -webkit-linear-gradient(-45deg, #f75959 0%, #f35587 100%);
+            background: -o-linear-gradient(-45deg, #f75959 0%, #f35587 100%);
+            background: -ms-linear-gradient(-45deg, #f75959 0%, #f35587 100%);
+            background: -webkit-linear-gradient(315deg, #f75959 0%, #f35587 100%);
+            background: -o-linear-gradient(315deg, #f75959 0%, #f35587 100%);
+            background: linear-gradient(135deg, #f75959 0%, #f35587 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f75959', endColorstr='#f35587', GradientType=1);
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+{% load bootstrap5 %}
+    {% load static %}
+<div class="container">
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="ctn" style="margin-top:50px;box-shadow: -10px 2px 4px #1f1f1f6b;">
+            <div class="row">
+                <div class="col-md-6" style="padding: 0">
+                    <div class="card" style="height: 100%;border:0;">
+                        <div class="card-body">
+                            <div class="card-title" style="text-align: center;">
+                                <h1><a href="{% url 'home' %}" style="text-decoration: none;">
+                                    <img src="{% static 'core/logo.png' %}" alt="" style="width: 90px;"></a></h1>
+                                <h3 class="lgtype">
+                                    {% if request.path == '/employee/login/' %}
+                                        Employee Login
+                                    {% else %}
+                                        Investigator Login
+                                    {% endif %}
+                                </h3>
+                            </div>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div {% if message.tags %} class="{{ message.tags }}"{% endif %}
+                                                               role="alert">{{ message }}</div>
+                                {% endfor %}
+                            {% endif %}
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {% bootstrap_form form %}
+                                <button class="btn btn-primary" id="loginBtn" style="width: 100%">Login</button>
+                                <a href="{% url 'reset_password' %}" style="text-decoration: none; color: #f75959">Forgot password?</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="padding: 0">
+                    <div class="text-wrap" style="height: 100%;display: flex;align-items: center">
+                        <div class="inner-txt" style="text-align: center;padding-bottom: 10px;">
+                            <p style="font-size: 30px; font-weight: 200;">Private investigator</p>
+                            <p>Hi, If you don't have account, please click on the button below to create an
+                                account</p>
+                            <a href="
+                                    {% if request.path == '/employee/login/' %}{% url 'client_registration' %}{% else %}{% url 'investigator_registration' %}{% endif %}"
+                               class="btn signupbtn">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#loginBtn').click(function (event) {
+                username = $('#id_username');
+                password = $('#id_password');
+                $('.form-text').text('');
+                if (username.val() === '') {
+                    username.addClass('is-invalid').removeClass('is-valid');
+                    $('.form-text').text('Username is required').addClass('text-danger username-text').removeClass('text-muted');
+                    event.preventDefault();
+                } else {
+                    username.addClass('is-valid').removeClass('is-invalid');
+                }
+                $('.password-text').remove();
+                if (password.val() === '') {
+                    password.addClass('is-invalid').removeClass('is-valid');
+                    password.after('<p class="password-text text-danger">Password is required</p>');
+                    event.preventDefault();
+                } else {
+                    password.addClass('is-valid').removeClass('is-invalid');
+                    $('.password-text').remove();
+                }
+
+            });
+        })
+    </script>
+{% endblock %}

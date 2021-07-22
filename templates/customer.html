@@ -1,0 +1,57 @@
+{% extends 'content_base.html' %}
+{% block title %}PIs Customer{% endblock %}
+{% block stylesheet %}
+
+    <style>
+        .card-body div.row {
+            margin: 10px 0;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="pictn" style="margin-top: 20px;">
+            <div class="card">
+                <div class="card-header"><h3 style="font-weight: 100;">Available customers</h3><a href="{% url 'customer_add' %}"
+                                                                        class="btn btn-primary">Add new
+                    customer</a></div>
+                <div class="card-body">
+                    {% if customers %}
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">Zip code</th>
+                                <th scope="col">Address</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>{% for customer in customers %}
+                                <tr>
+                                    <td>{{ customer.full_name }}</td>
+                                    <td>{{ customer.phone_number }}</td>
+                                    <td>{{ customer.country }}</td>
+                                    <td>{{ customer.zip_code }}</td>
+                                    <td>{{ customer.address.place }}</td>
+                                    <td style="max-width: 80px;"><a href="{% url 'customer_delete' customer.id %}"
+                                           class="btn btn-danger" style="margin-right: 5px;"><i class="fa fa-trash-o"></i></a><a href="{% url 'customer_update' customer.id %}"
+                                           class="btn btn-primary" style="margin-right: 5px;"><i class="fa fa-edit"></i></a><a href="{% url 'search' %}?customer_id={{ customer.id }}"
+                                           class="btn btn-success"><i class="fa fa-search"></i></a></td>
+                                </tr> {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <h3>No available customers found</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

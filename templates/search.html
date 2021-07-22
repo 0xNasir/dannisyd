@@ -1,0 +1,75 @@
+{% extends 'content_base.html' %}
+{% block title %}
+    PIs | Search Investigator
+{% endblock %}
+{% block stylesheet %}
+    <style>
+        .s-ctn {
+            margin: 15px 0;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        {% if request.GET.customer_id %}
+            <form method="POST" class="form-inline">
+                {% csrf_token %}
+                <div style="display: flex; margin-top: 10px;">
+                    <input type="text" class="form-control" name="address" value="{{input_text}}" placeholder="Address" required/>
+                    <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        {% else %}
+            <h3>Please select a customer from the list</h3>
+            <ul>
+                {% for customer in customers %}
+                    <li><a href="{% url 'search' %}?customer_id={{ customer.id }}">{{ customer.full_name }}</a></li>
+                {% endfor %}
+
+            </ul>
+        {% endif %}
+        {% if request.method == 'POST' %}
+            <div class="pictn">
+                {% if pis %}
+                    {% for pi in pis %}
+                        <div class="s-ctn">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3 col-4">Name</div>
+                                        <div class="col-md-9 col-8">{{ pi.user.get_full_name }}</div>
+                                        <div class="col-md-3 col-4">Email</div>
+                                        <div class="col-md-9 col-8">{{ pi.user.email }}</div>
+                                        <div class="col-md-3 col-4">phone</div>
+                                        <div class="col-md-9 col-8">{{ pi.phone_number }}</div>
+                                        <div class="col-md-3 col-4">ZIP Code</div>
+                                        <div class="col-md-9 col-8">{{ pi.zip_code }}</div>
+                                        <div class="col-md-3 col-4">Address</div>
+                                        <div class="col-md-9 col-8">{{ pi.address.place }}</div>
+                                        <div class="col-md-3 col-4">Distance from customer</div>
+                                        <div class="col-md-9 col-8">{{ pi.customer_distance|floatformat:2 }} Miles (Estimated travel time {{pi.customer_travel_time}})</div>
+                                        <div class="col-md-3">Distance from Employee</div>
+                                        <div class="col-md-9">{{ pi.client_distance|floatformat:2 }} Miles (Estimated travel time {{pi.client_travel_time}})</div>
+                                        <div class="col-md-3">Distance from input address</div>
+                                        <div class="col-md-9">{{ pi.input_distance|floatformat:2 }} Miles (Estimated travel time {{pi.input_travel_time}})</div>
+                                    </div>
+
+                                    <form action="{% url 'booked_investigator' %}" method="POST">
+                                        {% csrf_token %}
+                                        <input type="text" name="customer_id" value="{{ request.GET.customer_id }}" style="display: none"/>
+                                        <input type="text" name="investigator_id" value="{{ pi.id }}" style="display: none"/>
+                                        <button class="btn btn-success">Book investigator</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h3>No available investigators found within this zip code</h3>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

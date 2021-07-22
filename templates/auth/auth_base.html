@@ -1,0 +1,48 @@
+{% load bootstrap5 %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="icon" href="{% static 'core/favicon.ico' %}">
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    <style>
+        .form-control {
+    border: 1px solid #dee2e6;
+    font-size: 14px;
+    line-height: 26px;
+    background-color: #ffffff;
+    border-radius: 6px;
+}
+        .form-control:focus{
+            border-color: #2f55d4;
+            box-shadow: none;
+        }
+        .form-control.is-invalid, .was-validated .form-control:invalid, .form-control.is-invalid:focus,
+        .form-control.is-valid, .was-validated .form-control:valid, .form-control.is-valid:focus{
+            box-shadow: none;
+        }
+        .signupbtn {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .signupbtn:hover {
+            color: black;
+            background-color: white;
+        }
+    </style>
+    {% block stylesheet %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<div class="wrapper">
+    {% block content %}{% endblock %}
+</div>
+{% bootstrap_javascript %}
+{% block script %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends 'content_base.html' %}
+{% block title %}
+    PIs | Booked investigator
+{% endblock %}
+{% block stylesheet %}
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="pictn" style="margin-top: 20px;">
+            <div class="card">
+                <div class="card-header"><h3 style="font-weight: 100;">Booking info</h3></div>
+                <div class="card-body">
+                    {% if bookingData %}
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">Customer Name</th>
+                                <th scope="col">Customer Phone</th>
+                                <th scope="col">Investigator Name</th>
+                                <th scope="col">Investigator Phone</th>
+                                <th scope="col">Booking Date</th>
+                                <th scope="col"></th>
+                            </tr>
+                            </thead>
+                            <tbody>{% for data in bookingData %}
+                                <tr>
+                                    <td>{{ data.customer.full_name }}</td>
+                                    <td>{{ data.customer.phone_number }}</td>
+                                    <td>{{ data.investigator.user.get_full_name }}</td>
+                                    <td>{{ data.investigator.phone_number }}</td>
+                                    <td>{{ data.booked_time|date }}</td>
+                                    <td style="max-width: 80px;">
+                                        <a href="{% url 'booked_investigator_delete' data.id %}" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+                                        <a href="{% url 'inbox' data.investigator.user.get_username %}" class="btn btn-success"><i class="fa fa-comment"></i></a>
+                                    </td>
+                                </tr> {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <h3>No available booking info found</h3>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

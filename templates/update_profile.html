@@ -1,0 +1,82 @@
+{% extends 'content_base.html' %}
+{% block title %}
+    PIs | Update profile | {{ request.user.get_full_name }}
+{% endblock %}
+{% block stylesheet %}
+    <style>
+        .card-body div.row {
+            margin: 10px 0;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #id_address_0 {
+            width: 100% !important;
+        }
+
+        #id_address_1, #id_address_2 {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    {% load bootstrap5 %}
+    <div class="container" style="margin-top: 20px;">
+        <div class="card">
+            <div class="card-header"><h3 style="font-weight: 100">Update profile</h3></div>
+            <div class="card-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div {% if message.tags %} class="{{ message.tags }}"{% endif %}
+                                                   role="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <form action="{{ request.path }}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {% bootstrap_field form2.first_name %}
+                        </div>
+                        <div class="col-md-6">
+                            {% bootstrap_field form2.last_name %}
+                        </div>
+                        <div class="col-md-6">
+                            {% bootstrap_field form2.email %}
+                        </div>
+                        <div class="col-md-6">
+                            {% bootstrap_field form.phone_number %}
+                        </div>
+                        <div class="col-md-12">
+                            {% bootstrap_field form.zip_code %}
+                        </div>
+                        <div class="col-md-12">
+                            {% if request.session.user_type == 'client' %}
+                                {% bootstrap_field form.reason_for_service %}
+                            {% else %}
+                                {% bootstrap_field form.available %}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-12">
+                            {% bootstrap_field form.address %}
+                        </div>
+                    </div>
+                    {{ form.media }}
+                    <button class="btn btn-primary" style="margin-left: 13px;">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#id_address_0').addClass('form-control');
+            $('#id_reason_for_service').attr('rows','3');
+        })
+    </script>
+{% endblock %}

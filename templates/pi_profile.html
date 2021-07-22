@@ -1,0 +1,54 @@
+{% extends 'content_base.html' %}
+{% block title %}
+    PIs | investigator profile | {{ request.user.get_full_name }}
+{% endblock %}
+{% block stylesheet %}
+    <style>
+        .card-body div.row {
+            margin: 10px 0;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="container" style="margin-top: 20px;">
+        <div class="card">
+            <div class="card-header"><h3 style="font-weight: 100;">My Profile</h3><a href="{% url 'investigator_profile_update' %}"
+                                                           class="btn btn-primary">Update</a></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-3">Name</div>
+                    <div class="col-8">: {{ request.user.get_full_name }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Email</div>
+                    <div class="col-8">: {{ request.user.email }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Phone</div>
+                    <div class="col-8">: {{ pi.phone_number }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Availability</div>
+                    <div class="col-8">: {{ pi.available }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Country</div>
+                    <div class="col-8">: {{ pi.country }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-3">ZIP code</div>
+                    <div class="col-8">: {{ pi.zip_code }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-3">Address</div>
+                    <div class="col-8">: {{ pi.address.place }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

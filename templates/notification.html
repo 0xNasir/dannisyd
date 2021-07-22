@@ -1,0 +1,72 @@
+{% extends 'content_base.html' %}
+{% block title %}
+    {{ request.user.get_full_name }} - Notification
+{% endblock %}
+{% block stylesheet %}
+
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="ctn" style="margin-top: 20px;">
+            <div class="card">
+                <div class="card-header">
+                    <h3 style="font-weight: 100;">Notifications</h3>
+                </div>
+                <div class="card-body">
+                    {% for notification in notifications %}
+                        {% if notification.type == 'booked' %}
+                            <div class="alert alert-success" role="alert" style="display: flex;">
+                                <div style="width: 100%;">
+                                    <div>
+                                        <h4 class="alert-heading">New booking</h4>
+                                        <div><strong>{{ notification.sender.get_full_name }}</strong> booked you for
+                                            a customer
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">{{ notification.notify_at|date:'d-M-Y H:m:s' }}</small>
+                                </div>
+                                <div class="action">
+                                    <a href="{% url 'inbox' notification.sender.username %}"
+                                       class="btn btn-sm btn-outline-primary"><i class="fa fa-comment"></i></a>
+                                    {% if notification.seen %}
+                                    {% else %}
+                                        <a href="{% url 'notification_response' notification.id %}"
+                                           class="btn btn-sm btn-outline-primary"><i class="fa fa-check"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if notification.type == 'unbooked' %}
+                            <div class="alert alert-danger" role="alert" style="display: flex;">
+                                <div style="width: 100%;">
+                                    <div>
+                                        <h4 class="alert-heading">Cancel booking</h4>
+                                        <div><strong>{{ notification.sender.get_full_name }}</strong> cancelled
+                                            booking
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">{{ notification.notify_at|date:'d-M-Y H:m:s' }}</small>
+                                </div>
+                                <div class="action">
+                                    <a href="{% url 'inbox' notification.sender.username %}"
+                                       class="btn btn-sm btn-outline-primary"><i class="fa fa-comment"></i></a>
+                                    {% if notification.seen %}
+                                    {% else %}
+                                        <a href="{% url 'notification_response' notification.id %}"
+                                           class="btn btn-sm btn-outline-primary"><i class="fa fa-check"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

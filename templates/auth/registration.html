@@ -1,0 +1,86 @@
+{% extends 'auth/auth_base.html' %}
+{% block title %}PIs | Registration{% endblock %}
+{% block stylesheet %}
+    <style>
+        #id_address_0 {
+            width: 100% !important;
+        }
+
+        #id_address_1, #id_address_2 {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    {% load static %}
+    {% load bootstrap5 %}
+    <div class="row" style="margin:0;">
+        <div class="col-md-6 col-sm-0" style="padding: 0;background: linear-gradient(135deg, #f75959 0%, #f35587 100%);">
+            <div class="ctn" style="display:flex;align-items: center; height: 100%; text-align: center;">
+                <div class="txt">
+                    <h1 style="color: #ffffff; font-weight: 100">Private Investigator</h1>
+                    <p style="color: #ffffff;font-weight: 200">The Agency Inc. is an authorized Private Investigators in Virginia & Maryland. The Agency Inc. employs Maryland Private Investigators, Virginia Private Investigators, DC Private Investigators, Virginia Detectives, Maryland Detectives and DC Detectives.</p>
+                    <a href="{% if request.path == '/employee/register/' %}{% url 'client_login' %}{% else %}{% url 'investigator_login' %}{% endif %}"
+                       class="btn signupbtn">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12" style="padding: 0;">
+            <div class="card container-fluid" style="border: 0">
+                <div class="card-body">
+                    <div class="card-title" style="text-align: center;">
+                        <h1><a href="{% url 'home' %}" style="text-decoration: none;"><img src="{% static 'core/logo.png' %}" alt="" style="width: 90px;"></a></h1>
+                        <h3 class="lgtype">
+                            {% if request.path == '/employee/register/' %}
+                                Employee Registration
+                            {% else %}
+                                Investigator Registration
+                            {% endif %}
+                        </h3>
+                    </div>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div {% if message.tags %} class="{{ message.tags }}"{% endif %}
+                                                       role="alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {% if request.path == '/employee/register/' %}
+                        <div class="mb-3"><label class="form-label" for="id_secret_code">Secret Code</label><input type="text" name="secret_code" maxlength="100" class="form-control" placeholder="secret code" title="" required id="id_secret_code"></div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% bootstrap_field form.first_name %}
+                            </div>
+                            <div class="col-md-6">
+                                {% bootstrap_field form.last_name %}
+                            </div>
+                            <div class="col-md-6">
+                                {% bootstrap_field form.username %}
+                            </div>
+                            <div class="col-md-6">
+                                {% bootstrap_field form.email %}
+                            </div>
+                            <div class="col-md-12">
+                                {% bootstrap_field form.password %}
+                            </div>
+                        </div>
+                        {% bootstrap_form userForm %}
+                        {{ userForm.media }}
+                        <button class="btn btn-primary">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#id_address_0").addClass("form-control");
+            $("#id_reason_for_service").attr("rows", "3");
+        })
+    </script>
+{% endblock %}

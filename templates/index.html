@@ -1,0 +1,34 @@
+{% extends 'content_base.html' %}
+{% block title %}PIs Home page{% endblock %}
+{% block content %}
+    <div class="first" style="margin-top: 50px;">
+        <div class="row" style="padding: 0; align-items: center; text-align: center">
+            <div class="col-md-6" style="padding: 0;margin: 0">
+                <h1 style="font-weight: 100">Private investigator</h1>
+            </div>
+            <div class="col-md-6" style="padding: 0;margin: 0;">
+                <p style="text-align: justify;">The Agency Inc. is an authorized Private Investigators in Virginia &
+                    Maryland. The Agency Inc. employs Maryland Private Investigators, Virginia Private Investigators, DC
+                    Private Investigators, Virginia Detectives, Maryland Detectives and DC Detectives.
+                </p>
+                <a href="{% url 'search' %}" class="btn btn-outline-primary">Search here</a>
+            </div>
+        </div>
+    </div>
+    <div class="second" style="margin-top: 20px;">
+        <div class="row" style="padding: 0; align-items: center; text-align: center;">
+            <div class="col-md-6" style="padding: 0;margin: 0;">
+                <p>Hi there,</p>
+                <p>We have thousands of employees across the Virginia and Maryland. It's a great opportunity to get hired by one of our many employees.</p>
+                <p>If you are new here, you can register from the link below.</p>
+                <a href="{% url 'investigator_registration' %}" class="btn btn-outline-primary">register your
+                    account</a>
+                <p>If you are already registered as an investigator, login to check for updates.</p>
+                <a href="{% url 'investigator_login' %}" class="btn btn-outline-success">login</a>
+            </div>
+            <div class="col-md-6" style="padding: 0;margin: 0;">
+                <h1 style="font-weight: 100;">Are you an investigator?</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
