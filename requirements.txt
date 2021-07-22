@@ -20,7 +20,6 @@ idna==2.10
 isort==5.8.0
 lazy-object-proxy==1.6.0
 mccabe==0.6.1
-mysqlclient==2.0.3
 numpy==1.20.3
 pandas==1.2.4
 pgeocode==0.3.0
@@ -39,3 +38,4 @@ Unidecode==1.1.2
 urllib3==1.26.5
 wrapt==1.12.1
 gunicorn
+psycopg2-binary
