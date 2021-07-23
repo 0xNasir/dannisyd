@@ -2,6 +2,7 @@ asgiref==3.4.1
 beautifulsoup4==4.9.3
 certifi==2021.5.30
 charset-normalizer==2.0.3
+dj-database-url==0.5.0
 dj-places==4.0.0
 Django==3.2.5
 django-bootstrap-v5==1.0.4
